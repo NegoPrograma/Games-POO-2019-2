@@ -9,10 +9,11 @@ import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-
+import java.util.ArrayList;
 
 public class MainWindow extends JPanel implements Runnable,KeyListener {
     
+    private ArrayList keyQueue = new ArrayList();
     private Raquete player1;
     private Raquete player2;
     private Bola bola;
@@ -65,6 +66,9 @@ public class MainWindow extends JPanel implements Runnable,KeyListener {
                if(player2.baixo)
                    player2.moveBaixo();
            }*/
+           move(keyQueue, player1,player2);
+           limits(player1);
+           limits(player2);
            repaint();
            
             try {
@@ -90,7 +94,7 @@ public class MainWindow extends JPanel implements Runnable,KeyListener {
         } else if(keyCode == KeyEvent.VK_Q){
             player2.baixo = true;
         }*/
-         int keyCode = e.getKeyCode();
+       /*  int keyCode = e.getKeyCode();
          if(keyCode == KeyEvent.VK_Q){
             player1.moveCima();
         } else if(keyCode == KeyEvent.VK_A){
@@ -100,21 +104,57 @@ public class MainWindow extends JPanel implements Runnable,KeyListener {
             player2.moveCima();
         } else if(keyCode == KeyEvent.VK_L){
             player2.moveBaixo();
+        }*/
+       
+       int keyCode = e.getKeyCode();
+         if(keyCode == KeyEvent.VK_Q){
+            keyQueue.add("q");
+        } else if(keyCode == KeyEvent.VK_A){
+           keyQueue.add("a");
+        } 
+        if(keyCode == KeyEvent.VK_O){
+            keyQueue.add("o");
+        } else if(keyCode == KeyEvent.VK_L){
+             keyQueue.add("l");
         }
        
+       
+       
     }
+    
+    public void limits(Raquete r){
+        if(r.getY()+r.getAltura() > ALTURA || r.getY() < 0)
+            r.setY(ALTURA/2);
+    }
+    
+    public void move(ArrayList al, Raquete p1, Raquete p2){
+        for(int i = 0;i < al.size();i++){
+            if(al.get(i).equals("q")){
+               player1.moveCima();
+           } else if(al.get(i).equals("a")){
+               player1.moveBaixo();
+           } 
+           if(al.get(i).equals("o")){
+               player2.moveCima();
+           } else if(al.get(i).equals("l")){
+               player2.moveBaixo();
+           }
+           al.remove(i);
+        }
+    }
+    
     
     
     @Override
     public void keyTyped(KeyEvent e) {
-         if(p1 == null || p2 == null){
+        /* if(p1 == null || p2 == null){
             p1 = new Thread(this,"p1");
             p2 = new Thread(this,"p2");
             p1.start();
             p2.start();
-        } 
+        } */
         System.out.println("pressionou.");
-        int keyCode = e.getKeyCode();
+      /*  int keyCode = e.getKeyCode();
          if(keyCode == KeyEvent.VK_Q){
             player1.moveCima();
         } else if(keyCode == KeyEvent.VK_A){
@@ -124,7 +164,20 @@ public class MainWindow extends JPanel implements Runnable,KeyListener {
             player2.moveCima();
         } else if(keyCode == KeyEvent.VK_L){
             player2.moveBaixo();
+        }*/
+        
+      int keyCode = e.getKeyCode();
+         if(keyCode == KeyEvent.VK_Q){
+            keyQueue.add("q");
+        } else if(keyCode == KeyEvent.VK_A){
+           keyQueue.add("a");
+        } 
+        if(keyCode == KeyEvent.VK_O){
+            keyQueue.add("o");
+        } else if(keyCode == KeyEvent.VK_L){
+             keyQueue.add("l");
         }
+      
     }
 
     @Override

@@ -53,13 +53,19 @@ public class Bola  {
                
                //verificando interação com raquetes esquerda e direita
                if(p1.y+p1.altura >= y && y >= p1.y){
-                   if(x-raio-3 <= p1.x + p1.largura)
+                   if(x-raio-3 <= p1.x + p1.largura){
+                       velocX++;
+                       velocY++;
                        velocX = -velocX;
+                   }
                }
                
                if(p2.y+p2.altura >= y && y >= p2.y){
-                   if(x+raio+3 >= p2.x )
+                   if(x+raio+3 >= p2.x ){
+                       velocX++;
+                       velocY++;
                        velocX = -velocX;
+                   }
                }
                
         
